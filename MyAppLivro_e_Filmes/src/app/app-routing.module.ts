@@ -17,7 +17,8 @@ const routes: Routes = [
   },
   { path: 'filmes', loadChildren: './filmes/filmes.module#FilmesPageModule' },
   { path: 'livros', loadChildren: './livros/livros.module#LivrosPageModule' },
-  { path: 'codebar', loadChildren: './codebar/codebar.module#CodebarPageModule' }
+  { path: 'codebar', loadChildren: './codebar/codebar.module#CodebarPageModule' },
+  { path: 'destino', loadChildren: './destino/destino.module#DestinoPageModule' }
 ];
 
 @NgModule({
