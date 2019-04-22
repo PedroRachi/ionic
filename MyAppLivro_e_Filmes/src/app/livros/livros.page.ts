@@ -1,29 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
-import { livros } from '../model/livros';
+import { Http } from '@angular/http';
+import { MovieService } from '../movie.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-livros',
   templateUrl: './livros.page.html',
   styleUrls: ['./livros.page.scss'],
+  providers:[
+    MovieService
+  ]
 })
 export class LivrosPage implements OnInit {
 
+  public livros = new Array<any>();
 
-  public livros: livros[];
-
-  constructor() {
-    var l1 = { nome: '1984', autor: 'George Orwell' };
-    var l2 = { nome: 'Harry Potter e a Pedra Filosofal', autor: 'J. K. Rowling' };
-    var l3 = { nome: 'O Senhor dos Anéis', autor: 'J. R. R. Tolkien' };
-    var l4 = { nome: 'Fundação', autor: 'Isaac Asimov' };
-    var l5 = { nome: 'Neuromancer', autor: 'William Gibson' };
-    var l6 = { nome: 'O Homem do Castelo do Alto', autor: 'Philip K. Dick' };
-    var l7 = { nome: 'Snow Crash', autor: 'Neal Stephenson' };
-    var l8 = { nome: '2001: Uma Odisséia no Espaço', autor: 'Arthur Clarke' };
-    var l9 = { nome: 'Coraline', autor: 'Neal Gaiman' };
-    this.livros = [l1, l2, l3, l4, l5, l6, l7, l8, l9];
+  constructor(
+    public http:Http,
+    public movieService:MovieService,
+    public navController:NavController,
+    ) { 
+    this.ionViewDidLoad();
   }
+
+  ionViewDidLoad() {
+    this.movieService.getTeste().subscribe(
+    data => {
+      const response = (data as any);
+      const objeto_retorno = JSON.parse(response._body);
+
+      for (var li in objeto_retorno){
+        console.log(li);
+        this.livros.push(objeto_retorno[li]);
+      }
+    console.log(objeto_retorno);
+    }, error => {
+    console.log(error);
+    })}
+
   ngOnInit() {
   }
 
